@@ -29,6 +29,10 @@
     color: #39739d;
 }
 
+.tag h5:hover{
+    cursor: pointer
+}
+
 .tag p{
     font-size: 14px;
     color: #323232;

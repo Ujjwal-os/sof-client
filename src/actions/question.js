@@ -79,3 +79,15 @@ export const postComment = (commentData)=>async (dispatch)=>{
         console.log(error);
     }
 }
+
+export const selectTag = (tagData,navigate) => async (dispatch)=>{
+    try {
+        console.log(tagData)
+        const {data}=await api.tagData(tagData);
+        console.log(data)
+        dispatch({type:"FETCH_TAGGED_QUESTIONS",payload:data})
+        navigate("/Questions")
+    } catch (error) {
+        console.log(error)
+    }
+}
