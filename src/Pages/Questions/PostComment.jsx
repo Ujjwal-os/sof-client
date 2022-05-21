@@ -1,10 +1,10 @@
 import React,{useState} from 'react'
 import {useDispatch,useSelector} from 'react-redux'
-import {useParams} from 'react-router-dom'
+import {useParams,useNavigate} from 'react-router-dom'
 import {postComment} from '../../actions/question.js'
 
 const PostComment = ({answerId}) => {
-
+    const navigate=useNavigate();
     const dispatch=useDispatch();
     const {id}=useParams();
     const User=useSelector((state)=>(state.currentUserReducer))
@@ -18,10 +18,19 @@ const PostComment = ({answerId}) => {
 
     const handleSubmit = (e) =>{
         e.preventDefault()
+        if(User===null){
+            alert("Login or Signup for posting answer")
+            navigate('/Auth')
+        }else{
+            if(comment===""){
+                alert("Enter an comment before submitting")
+            }else{
+                dispatch(postComment({"commentBody":comment,"id":id,"answerId":answerId,"userId":User?.result?._id,"userCommented":User?.result?.name}))
+                setLink(!link)
+            }
+        }
         
-        console.log({"commentBody":comment,"id":id,"answerId":answerId,"userId":User?.result?._id,"userCommented":User?.result?.name})
-       dispatch(postComment({"commentBody":comment,"id":id,"answerId":answerId,"userId":User?.result?._id,"userCommented":User?.result?.name}))
-        setLink(!link)
+      
     }
 
   return (
